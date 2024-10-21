@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Large Language Model Showcase</title>
+    <link rel="icon" href="img/coin.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Canvas для эффекта матрицы -->
+<canvas id="matrix-canvas"></canvas>
+
+<!-- Стартовый экран -->
+<div id="start-screen">
+
+    <div class="start-message">
+        Initialize
+    </div>
+</div>
+
+<!-- Основной контент сайта -->
+<div id="main-content">
+
+    <!-- Галерея изображений в левом верхнем углу -->
+    <div class="image-grid left">
+        <div class="column">
+            <img src="img/blackhole.png" alt="Screenshot_12">
+            <img src="img/sacura.png" alt="Screenshot_13(2)">
+        </div>
+    </div>
+
+    <!-- Галерея изображений в правом верхнем углу -->
+    <div class="image-grid right">
+        <div class="column">
+            <img src="img/tree.png" alt="Screenshot_14">
+            <img src="img/woman.png" alt="Изображение 4">
+        </div>
+    </div>
+
+    <!-- Центральное изображение -->
+    <div class="center-image">
+        <img src="img/coin.png" alt="Main Image" class="main-image">
+    </div>
+
+    <!-- Кнопки в левом нижнем углу -->
+    <div class="button-container">
+        <button onclick="window.open('')">Pump</button>
+        <button onclick="window.open('')">X</button>
+        <button onclick="window.open('')">Telegram</button>
+    </div>
+
+    <!-- Консоль в правом нижнем углу -->
+    <div class="console" id="console">
+        <div class="console-header">
+            <span>LLM Console</span>
+            <div class="close-btn" onclick="closeConsole()">
+                <img src="img/x.png" class="x">
+            </div>
+        </div>
+        <div class="console-body">
+            <div class="console-content" id="console-content"></div>
+            <div class="console-input">
+                <span class="console-prompt">&gt;</span>
+                <input type="text" id="console-input-field" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Встроенный JavaScript -->
+<script src="script.js"></script>
+
+</body>
+</html>

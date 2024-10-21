@@ -1,0 +1,320 @@
+
+.x {
+  width: 20px;
+  margin-top: 3px;
+  position: absolute;
+}
+/* Подключение шрифта */
+@font-face {
+  font-family: 'Roboto';
+  src: url('fonts/Roboto-Regular.woff2') format('woff2'),
+       url('fonts/Roboto-Regular.woff') format('woff'),
+       url('fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Сброс стилей по умолчанию и установка курсора */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: url('other/cursor.cur') 1 0, auto;	
+}
+
+/* Отключаем прокрутку */
+html, body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* Фон с эффектом матрицы */
+body {
+  background-color: black;
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Canvas для эффекта матрицы */
+#matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Стиль для стартового экрана */
+#start-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  background: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background-image:linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2)), url('img/background.webp');
+}
+
+.start-image {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.start-message {
+  display: none;
+  color: #00ff00;
+  font-size: 24px;
+  cursor: url('other/robot.cur') 4 1, pointer;
+  position: relative;
+  padding: 15px 30px;
+  background-color: black;
+  border: 2px solid #00ff00;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  margin-top: 50px;
+  opacity: 0.92;
+}
+
+.start-message::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border: 2px solid #00ff00;
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+.start-message:hover::before {
+  transform: scale(1);
+}
+
+/* Контейнер для основного контента */
+#main-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+/* Стили для галереи изображений в левом верхнем и правом верхнем углах */
+.image-grid {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  z-index: 2;
+}
+
+.image-grid.left {
+  left: 10px;
+}
+
+.image-grid.right {
+  right: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-right: 60px;
+}
+
+.column img {
+  width: 150px;
+  height: 150px;
+  margin: 5px 5px 155px;
+  object-fit: cover;
+  border: 5px solid #00ff00;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 255, 0, 0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.column img:last-child {
+  margin-bottom: 5px;
+}
+
+.column img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 255, 0, 0.7);
+}
+
+/* Стили для центрального изображения */
+.center-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.main-image {
+  max-width: 400px;
+  object-fit: contain;
+  transform-style: preserve-3d;
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+0% {
+  transform: rotateY(0deg);
+}
+50% {
+  transform: rotateY(90deg); 
+}
+100% {
+  transform: rotateY(0deg); 
+}
+}
+
+/* Стили для кнопок в левом нижнем углу */
+.button-container {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+
+.button-container button {
+  margin-bottom: 10px;
+  padding: 15px 30px;
+  font-size: 20px;
+  background-color: black;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.3s;
+  cursor: url('other/robot.cur') 4 1, pointer;
+}
+
+.button-container button::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border: 2px solid #00ff00;
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+.button-container button:hover {
+  transform: scale(1.05);
+}
+
+.button-container button:hover::before {
+  transform: scale(1);
+}
+
+/* Стили для консоли */
+.console {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 535px;
+  height: 357px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 2px solid #00ff00;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ff00;
+  z-index: 4;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.console-header {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #00ff00;
+  padding: 5px;
+  font-size: 16px;
+  border-bottom: 1px solid #00ff00;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.console-header .close-btn {
+  width: 20px;
+  height: 20px;
+  background-color: #ff5c5c;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.console-body {
+  width: 100%;
+  height: calc(100% - 30px);
+  background-color: transparent;
+  color: #00ff00;
+  border: none;
+  outline: none;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  padding: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.console-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-bottom: 10px;
+  cursor: url('other/cursor.cur') 1 0, auto;	
+}
+
+.console-input {
+  display: flex;
+  align-items: center;
+}
+
+.console-prompt {
+  margin-right: 5px;
+  color: #00ff00;
+}
+
+.console-input input {
+  width: 100%;
+  background-color: transparent;
+  color: #00ff00;
+  border: none;
+  outline: none;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  cursor: url('other/write.cur') 5 2, auto;
+}
+
+/* Адаптация под разрешение 1920x1280 */
+@media screen and (min-width: 1920px) {
+  .column img {
+      width: 200px;
+      height: 200px;
+  }
+
+  .console {
+      width: 535px;
+      height: 357px;
+  }
+
+  .center-image .main-image {
+      width: 400px;
+      height: 400px;
+  }
+}
